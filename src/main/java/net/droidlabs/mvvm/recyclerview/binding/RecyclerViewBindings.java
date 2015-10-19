@@ -8,15 +8,14 @@ import net.droidlabs.mvvm.recyclerview.events.ClickHandler;
 
 import java.util.Collection;
 
-public class RecyclerViewBindings
-{
+public class RecyclerViewBindings {
+
     private static final int KEY_ITEMS = -123;
     private static final int KEY_HANDLER = -124;
 
     @SuppressWarnings("unchecked")
     @BindingAdapter("items")
-    public static <T> void setItems(RecyclerView recyclerView, Collection<T> items)
-    {
+    public static <T> void setItems(RecyclerView recyclerView, Collection<T> items) {
         BindingRecyclerViewAdapter<T> adapter = (BindingRecyclerViewAdapter<T>) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setItems(items);
@@ -27,8 +26,7 @@ public class RecyclerViewBindings
 
     @SuppressWarnings("unchecked")
     @BindingAdapter("handler")
-    public static <T> void setHandler(RecyclerView recyclerView, ClickHandler<T> handler)
-    {
+    public static <T> void setHandler(RecyclerView recyclerView, ClickHandler<T> handler) {
         BindingRecyclerViewAdapter<T> adapter = (BindingRecyclerViewAdapter<T>) recyclerView.getAdapter();
         if (adapter != null) {
             adapter.setClickHandler(handler);
