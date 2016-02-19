@@ -206,6 +206,14 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
         }
     }
 
+    public void setOnBindViewHolderListener(OnBindViewHolderListener<T> onBindViewHolderListener) {
+        this.onBindViewHolderListener = onBindViewHolderListener;
+    }
+
+    public void setSelectedItem(T selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
     public void setClickHandler(ClickHandler<T> clickHandler) {
         this.clickHandler = clickHandler;
     }
