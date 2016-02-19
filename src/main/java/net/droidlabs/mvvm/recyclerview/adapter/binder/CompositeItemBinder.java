@@ -1,5 +1,7 @@
 package net.droidlabs.mvvm.recyclerview.adapter.binder;
 
+import java.util.Map;
+
 public class CompositeItemBinder<T> implements ItemBinder<T>
 {
     private final ConditionalDataBinder<T>[] conditionalDataBinders;
@@ -37,5 +39,10 @@ public class CompositeItemBinder<T> implements ItemBinder<T>
         }
 
         throw new IllegalStateException();
+    }
+
+    @Override
+    public Map<Integer, Object> getBindingExtraVariables() {
+        return null;
     }
 }

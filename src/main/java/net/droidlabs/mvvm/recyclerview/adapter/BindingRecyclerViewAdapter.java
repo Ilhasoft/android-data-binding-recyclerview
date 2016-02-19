@@ -15,6 +15,9 @@ import net.droidlabs.mvvm.recyclerview.events.OnBindViewHolderListener;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingRecyclerViewAdapter.ViewHolder>
 {
@@ -94,6 +97,8 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
     public void onBindViewHolder(ViewHolder viewHolder, int position)
     {
         final T item = items.get(position);
+
+        addVariables(viewHolder);
         viewHolder.binding.setVariable(itemBinder.getBindingVariable(item), item);
         viewHolder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +113,13 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
 
         if(onBindViewHolderListener != null)
             onBindViewHolderListener.onBindViewHolder(this, viewHolder.binding, item);
+    }
+
+    private void addVariables(ViewHolder viewHolder) {
+        Set<Integer> keySet = itemBinder.getBindingExtraVariables().keySet();
+        for (Integer variableId : keySet) {
+            viewHolder.binding.setVariable(variableId, itemBinder.getBindingExtraVariables().get(variableId));
+        }
     }
 
     @Override
@@ -198,15 +210,4 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
         this.clickHandler = clickHandler;
     }
 
-    public void setSelectedItem(T selectedItem) {
-        this.selectedItem = selectedItem;
-    }
-
-    public T getSelectedItem() {
-        return selectedItem;
-    }
-
-    public void setOnBindViewHolderListener(OnBindViewHolderListener<T> onBindViewHolderListener) {
-        this.onBindViewHolderListener = onBindViewHolderListener;
-    }
 }
