@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import net.droidlabs.mvvm.recyclerview.adapter.BindingRecyclerViewAdapter;
 import net.droidlabs.mvvm.recyclerview.adapter.binder.ItemBinder;
 import net.droidlabs.mvvm.recyclerview.events.ClickHandler;
+import net.droidlabs.mvvm.recyclerview.events.OnBindViewHolderListener;
 
 import java.util.Collection;
 
@@ -36,6 +37,16 @@ public class RecyclerViewBindings {
     }
 
     @SuppressWarnings("unchecked")
+    @BindingAdapter("bindListener")
+    public static <T> void setOnBindViewHolder(RecyclerView recyclerView
+            , OnBindViewHolderListener<T> onBindViewHolderListener) {
+        BindingRecyclerViewAdapter<T> adapter = (BindingRecyclerViewAdapter<T>) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setOnBindViewHolderListener(onBindViewHolderListener);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     @BindingAdapter("itemViewBinder")
     public static <T> void setItemViewBinder(RecyclerView recyclerView, ItemBinder<T> itemViewMapper) {
         Collection<T> items = (Collection<T>) recyclerView.getTag(KEY_ITEMS);
@@ -43,5 +54,15 @@ public class RecyclerViewBindings {
         BindingRecyclerViewAdapter<T> adapter = new BindingRecyclerViewAdapter<>(itemViewMapper, items);
         adapter.setClickHandler(clickHandler);
         recyclerView.setAdapter(adapter);
+    }
+
+    @SuppressWarnings("unchecked")
+    @BindingAdapter("selected")
+    public static <T> void bindSelectedItem(RecyclerView recyclerView, T item) {
+        BindingRecyclerViewAdapter<T> adapter = (BindingRecyclerViewAdapter<T>) recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setSelectedItem(item);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

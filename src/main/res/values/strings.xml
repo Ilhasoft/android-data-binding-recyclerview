@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">recycler-view-binding</string>
+    <string name="prompt_protocol_info">Este é seu protocolo, anote-o para consultar no Disque 100</string>
 </resources>

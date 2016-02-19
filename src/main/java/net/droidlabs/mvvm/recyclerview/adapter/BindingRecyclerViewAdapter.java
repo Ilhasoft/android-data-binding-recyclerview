@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import net.droidlabs.mvvm.recyclerview.adapter.binder.ItemBinder;
 import net.droidlabs.mvvm.recyclerview.events.ClickHandler;
+import net.droidlabs.mvvm.recyclerview.events.OnBindViewHolderListener;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
@@ -22,6 +23,8 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
     private ObservableList<T> items;
     private LayoutInflater inflater;
     private ClickHandler<T> clickHandler;
+    private T selectedItem;
+    private OnBindViewHolderListener<T> onBindViewHolderListener;
 
     public BindingRecyclerViewAdapter(ItemBinder<T> itemBinder, @Nullable Collection<T> items)
     {
@@ -95,12 +98,16 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
         viewHolder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(clickHandler != null) {
+                if (clickHandler != null) {
                     clickHandler.onClick(item);
                 }
             }
         });
+        viewHolder.binding.getRoot().setSelected(selectedItem != null && selectedItem.equals(item));
         viewHolder.binding.executePendingBindings();
+
+        if(onBindViewHolderListener != null)
+            onBindViewHolderListener.onBindViewHolder(this, viewHolder.binding, item);
     }
 
     @Override
@@ -189,5 +196,17 @@ public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingR
 
     public void setClickHandler(ClickHandler<T> clickHandler) {
         this.clickHandler = clickHandler;
+    }
+
+    public void setSelectedItem(T selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public T getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setOnBindViewHolderListener(OnBindViewHolderListener<T> onBindViewHolderListener) {
+        this.onBindViewHolderListener = onBindViewHolderListener;
     }
 }
