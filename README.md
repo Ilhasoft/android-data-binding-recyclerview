@@ -47,6 +47,7 @@ Remember to use your classes and packages ;-).
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              app:items="@{usersViewModel.users}"
+             app:handler="@{usersViewModel.handler}"
              app:itemViewBinder="@{usersViewModel.itemViewBinder}"
              />
  </layout>
@@ -60,11 +61,25 @@ Remember to use your classes and packages ;-).
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        //Create view model instance
         usersViewModel = new UsersViewModel();
         usersViewModel.users.add(new SuperUserViewModel(new User("Android", "Dev")));
+        
+        //Handle click event on list
+        usersViewModel.handler = new ClickHandler<Violation>() {
+            @Override
+            public void onClick(Violation object) {
+                super.onClick(object);
+                Log.d("RecyclerViewBinding", "onClick() called with: " + "object = [" + object + "]");
+            }
+        };
 
+	//Binding the view model to layout
         binding = DataBindingUtil.setContentView(this, R.layout.users_view);
         binding.setUsersViewModel(usersViewModel);
+        
+        //It's necessary to set the LayoutManager for the RecyclerView
         binding.activityUsersRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 ```
@@ -75,6 +90,8 @@ Remember to use your classes and packages ;-).
     public class UsersViewModel extends BaseObservable
     {
         public ObservableArrayList<UserViewModel> users;
+        
+    	public ClickHandler<Violation> handler;
 
         public ItemBinder<UserViewModel> itemViewBinder()
             {
