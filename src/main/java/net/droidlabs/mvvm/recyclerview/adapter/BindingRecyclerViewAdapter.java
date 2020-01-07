@@ -1,22 +1,22 @@
 package net.droidlabs.mvvm.recyclerview.adapter;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.databinding.ViewDataBinding;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
+
 import net.droidlabs.mvvm.recyclerview.adapter.binder.ItemBinder;
 import net.droidlabs.mvvm.recyclerview.events.ClickHandler;
 import net.droidlabs.mvvm.recyclerview.events.OnBindViewHolderListener;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class BindingRecyclerViewAdapter<T> extends RecyclerView.Adapter<BindingRecyclerViewAdapter.ViewHolder>

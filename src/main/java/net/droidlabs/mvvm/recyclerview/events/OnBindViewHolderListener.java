@@ -1,6 +1,6 @@
 package net.droidlabs.mvvm.recyclerview.events;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 
 import net.droidlabs.mvvm.recyclerview.adapter.BindingRecyclerViewAdapter;
 
